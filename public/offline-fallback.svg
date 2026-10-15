@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#FAF5EF"/>
+  <circle cx="200" cy="120" r="50" fill="#E8D5C4"/>
+  <path d="M175 120 C175 106 186 95 200 95 C214 95 225 106 225 120 C225 134 200 150 200 150 C200 150 175 134 175 120 Z" fill="#C66B4E"/>
+  <text x="200" y="200" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="700" fill="#49352D" text-anchor="middle">Meal Ready &amp; Saved Offline</text>
+  <text x="200" y="225" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" fill="#786C65" text-anchor="middle">Full culinary details and recipe steps available</text>
+</svg>

@@ -1,0 +1,251 @@
+import fs from 'fs';
+
+const categories = [
+  {
+    prefix: 'rec-hl-wl',
+    tag: 'Weight Loss & Calorie Deficit',
+    goal: 'Weight Loss & Calorie Deficit',
+    isWeightFriendly: true,
+    isStudentFriendly: true,
+    descSuffix: 'Optimized for high satiety, lean protein, and low calorie density without excess oils.',
+    meals: [
+      { name: 'Steamed Moi Moi Elewe with Hard-Boiled Egg', cat: 'Breakfast', cal: 290, prep: 12, cost: 700, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Steamed bean pudding delivers plant protein and high fiber without oil, keeping hunger at bay for hours.' },
+      { name: 'Oatmeal Porridge with Skimmed Milk & Apple Slices', cat: 'Breakfast', cal: 280, prep: 5, cost: 550, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Beta-glucan fiber in oats stabilizes blood glucose and promotes prolonged satiety.' },
+      { name: 'Boiled Egg Whites & Steamed Spinach (Efo)', cat: 'Breakfast', cal: 180, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Pure lean protein paired with nutrient-dense greens for maximum micro-nutrients per calorie.' },
+      { name: 'Boiled Sweet Potato & Peppered Tomato Egg Scramble', cat: 'Breakfast', cal: 310, prep: 10, cost: 600, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Low glycemic index sweet potatoes prevent insulin spikes, curbing mid-morning hunger.' },
+      { name: 'Millet Pap (Ogi Baba) with Sugar-Free Milk & Boiled Egg', cat: 'Breakfast', cal: 240, prep: 6, cost: 400, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Fermented whole millet is probiotic, gentle on digestion, and very low in calories.' },
+      { name: 'Fresh Seafood Okro Soup with Light Oat Swallow', cat: 'Lunch', cal: 330, prep: 14, cost: 1100, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Okro mucilage binds bile acids and slows stomach emptying for exceptional satiety.' },
+      { name: 'Spicy Catfish Pepper Soup with Boiled Yam Baton', cat: 'Lunch', cal: 320, prep: 15, cost: 1300, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Thermogenic spices elevate metabolic burn while lean catfish provides pure marine protein.' },
+      { name: 'Efo Riro (Leafy Spinach Stew) with Grilled Titus Fish', cat: 'Lunch', cal: 350, prep: 16, cost: 1200, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Shredded shoko greens pack magnesium and iron with minimal carbs and fat.' },
+      { name: 'Steamed Cabbage & Carrot Stir-Fry with Boiled Chicken Breast', cat: 'Lunch', cal: 290, prep: 10, cost: 950, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Gigantic vegetable volume creates mechanical stomach fullness without surplus calories.' },
+      { name: 'Brown Honey Beans Pottage with Smoked Fish (Zero Palm Oil)', cat: 'Lunch', cal: 340, prep: 20, cost: 800, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Honey beans provide resistant starch that feeds gut flora and controls appetite hormone ghrelin.' },
+      { name: 'Grilled Tilapia Fillet with Lemon & Tossed Garden Salad', cat: 'Dinner', cal: 260, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Light white fish dinner that avoids evening bloating and digests easily before sleep.' },
+      { name: 'Vegetable Okro Stew with Boiled Chicken & Cauliflower Mash', cat: 'Dinner', cal: 270, prep: 15, cost: 1000, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Low-carb evening meal that maintains deep sleep and supports nighttime growth hormone secretion.' },
+      { name: 'Spicy Goat Meat Pepper Soup with Scent Leaves', cat: 'Dinner', cal: 280, prep: 18, cost: 1400, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Warm aromatic broth eliminates late-night junk cravings and delivers highly bioavailable iron.' },
+      { name: 'Steamed Mackerel in Banana Leaf with Garden Eggs', cat: 'Dinner', cal: 310, prep: 14, cost: 950, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Banana-leaf steaming locks in moisture without added oils, preserving delicate omega-3 fats.' },
+      { name: 'Boiled Plantain with Steamed Ugwu Greens & Smoked Panla', cat: 'Dinner', cal: 300, prep: 12, cost: 850, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Semi-ripe boiled plantain provides potassium while ugwu supplies folate and magnesium.' },
+      { name: 'Crisp Garden Eggs with Spicy Ose Oji Peanut Dip', cat: 'Snacks', cal: 120, prep: 3, cost: 300, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Garden eggs have 92% water volume and nasunin antioxidants, giving crunchy satisfaction for under 120 kcal.' },
+      { name: 'Boiled Corn Cob with Minimal Boiled Groundnuts', cat: 'Snacks', cal: 190, prep: 8, cost: 350, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Whole grain corn and boiled nuts provide steady satiety without high frying fats.' },
+      { name: 'Fresh Cucumber Slices & Roasted Groundnuts', cat: 'Snacks', cal: 110, prep: 2, cost: 250, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Crispy refreshing hydrating snack with minimal calories and healthy plant fats.' },
+      { name: 'Unsweetened Zobo Hibiscus Tea with Ginger & Cloves', cat: 'Juices & Smoothies', cal: 35, prep: 6, cost: 250, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Anthocyanin-rich hibiscus drink that naturally supports blood pressure and metabolic detox.' },
+      { name: 'Chilled Detox Cucumber, Lemon & Mint Flask Water', cat: 'Juices & Smoothies', cal: 15, prep: 2, cost: 200, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Zero-sugar infused water that keeps appetite signals calm during intense study or desk work.' },
+      { name: 'Fresh Pawpaw & Watermelon Salad Bowl', cat: 'Fruits & Light Bites', cal: 110, prep: 4, cost: 350, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Natural digestive papain in papaya supports digestive tract motility and delivers hydration.' },
+      { name: 'Chilled Coconut Tapioca Pearls with Fresh Mango Puree', cat: 'Desserts', cal: 160, prep: 8, cost: 450, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&auto=format&fit=crop&q=85', why: 'Light gluten-free tropical dessert that satisfies sweet cravings without processed cane sugars.' }
+    ]
+  },
+  {
+    prefix: 'rec-hl-wg',
+    tag: 'Weight Gain & Muscle Building',
+    goal: 'Weight Gain & Muscle Building',
+    isWeightFriendly: false,
+    isStudentFriendly: true,
+    descSuffix: 'Calorie-dense, high-protein Nigerian meals loaded with healthy fats, complex carbs, and nutrient volume.',
+    meals: [
+      { name: 'Fried Sweet Plantain (Dodo) with 3 Cheesy Scrambled Eggs', cat: 'Breakfast', cal: 580, prep: 8, cost: 850, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Calorie-dense combination of healthy sweet plantain sugars and bioavailable egg protein.' },
+      { name: 'Agege Bread Sandwich with Canned Sardine & Peanut Butter', cat: 'Breakfast', cal: 620, prep: 5, cost: 900, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Heavy energy surplus with dense marine fats, peanut lipids, and hearty Agege bread carbs.' },
+      { name: 'Rich Custard with Whole Milk, Honey & 4 Crispy Akara Cakes', cat: 'Breakfast', cal: 650, prep: 10, cost: 800, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'High-calorie warm breakfast that delivers easy-to-digest carbohydrates and plant proteins.' },
+      { name: 'Oatmeal Porridge Cooked in Whole Milk with Bananas & Cashews', cat: 'Breakfast', cal: 590, prep: 6, cost: 750, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Nutrient-rich complex starches loaded with healthy monounsaturated cashew fats.' },
+      { name: 'Boiled White Yam with Corned Beef & Egg Sauce', cat: 'Breakfast', cal: 610, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Starch-dense puna yam bathed in savory corned beef protein and whole egg lipids.' },
+      { name: 'Rich Egusi Soup with Assorted Meats & Pounded Yam', cat: 'Lunch', cal: 780, prep: 20, cost: 1600, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Ground melon seed oils and dense pounded yam offer an exceptional anabolic calorie surplus.' },
+      { name: 'Artisan Smokey Jollof Rice with Fried Chicken Thigh & Dodo', cat: 'Lunch', cal: 740, prep: 22, cost: 1500, img: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=900&auto=format&fit=crop&q=85', why: 'Classic high-calorie Nigerian combo packed with delicious flavors for building muscle mass.' },
+      { name: 'Ofada Rice with Ayamase Designer Meat Sauce & 2 Boiled Eggs', cat: 'Lunch', cal: 720, prep: 25, cost: 1700, img: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=900&auto=format&fit=crop&q=85', why: 'Unpolished whole Ofada rice with rich bleached palm oil pepper sauce and assorted beef.' },
+      { name: 'Nigerian Fried Rice with Liver Bites & Grilled Chicken Leg', cat: 'Lunch', cal: 690, prep: 20, cost: 1450, img: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=900&auto=format&fit=crop&q=85', why: 'Nutrient-dense organ meats provide zinc, B12, and iron alongside energy-dense rice.' },
+      { name: 'Beans Porridge with Sweet Plantain & Pan-Fried Titus Fish', cat: 'Lunch', cal: 680, prep: 22, cost: 1250, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Supercharged pairing of plant pulses and fatty oceanic mackerel for lean tissue synthesis.' },
+      { name: 'Creamy Yam Pottage (Asaro) with Palm Oil, Beef & Smoked Fish', cat: 'Dinner', cal: 630, prep: 18, cost: 1200, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Rich slow-burning carbohydrates that support overnight glycogen replenishing.' },
+      { name: 'Jollof Spaghetti with Sausage Slices & Boiled Eggs', cat: 'Dinner', cal: 620, prep: 15, cost: 850, img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=900&auto=format&fit=crop&q=85', why: 'Easy, fast student dinner with multiple protein sources to assist physical recovery.' },
+      { name: 'Eba (Yellow Garri Swallow) with Rich Ogbono Okra & Beef Stew', cat: 'Dinner', cal: 690, prep: 16, cost: 1350, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Ogbono seeds are rich in fatty acids, creating a viscous high-calorie soup.' },
+      { name: 'Thick Geisha Mackerel Jollof Macaroni with Fried Eggs', cat: 'Dinner', cal: 640, prep: 14, cost: 950, img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=900&auto=format&fit=crop&q=85', why: 'Quick calorie-dense dinner packed with marine oils and bioavailable egg protein.' },
+      { name: 'Catfish Pepper Soup with Generous Boiled Yam Chunks', cat: 'Dinner', cal: 540, prep: 18, cost: 1500, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Hearty restorative dinner rich in amino acids and satisfying yam starches.' },
+      { name: 'Roasted Boli (Plantain) with Heaping Golden Groundnuts', cat: 'Snacks', cal: 480, prep: 10, cost: 600, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Classic high-density street snack providing clean carbohydrates and healthy peanut fats.' },
+      { name: 'Soaked Ijebu Garri with Whole Milk, Sugar & Roasted Groundnuts', cat: 'Snacks', cal: 460, prep: 3, cost: 400, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Instant student calorie boost ready in 2 minutes without cooking appliances.' },
+      { name: 'Crunchy Spiced Chin Chin Snack Bowl', cat: 'Snacks', cal: 420, prep: 15, cost: 450, img: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=900&auto=format&fit=crop&q=85', why: 'Energy-dense snack ideal for fueling library study marathons.' },
+      { name: 'Spicy Gizdodo (Gizzard & Fried Sweet Plantain Bites)', cat: 'Appetizers & Sides', cal: 490, prep: 16, cost: 1200, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Protein-packed poultry gizzard and sweet caramelized plantain tossed in savory pepper.' },
+      { name: 'Creamy Kunu Aya (Tiger Nut, Coconut & Date Milk Shake)', cat: 'Juices & Smoothies', cal: 320, prep: 8, cost: 600, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Rich plant-based whole milk pressed with coconut oils and dates for clean weight gain.' },
+      { name: 'Avocado Banana Smoothie with Honey & Whole Milk', cat: 'Juices & Smoothies', cal: 380, prep: 5, cost: 650, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Smooth drinkable calories with heart-healthy monounsaturated fats.' },
+      { name: 'Warm Fluffy Puff Puff with Honey Glaze', cat: 'Desserts', cal: 340, prep: 12, cost: 450, img: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=900&auto=format&fit=crop&q=85', why: 'Beloved Nigerian sweet pastry offering quick post-workout carbohydrate replenishment.' }
+    ]
+  },
+  {
+    prefix: 'rec-hl-db',
+    tag: 'Diabetes & Blood Sugar Control',
+    goal: 'Diabetes & Blood Sugar Control',
+    isWeightFriendly: true,
+    isStudentFriendly: true,
+    descSuffix: 'Low glycemic index meals designed to avoid insulin spikes, improve insulin sensitivity, and sustain blood sugar balance.',
+    meals: [
+      { name: 'Oat Flour Swallow with Steamed Vegetable Okro Soup', cat: 'Lunch', cal: 320, prep: 12, cost: 950, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Beta-glucan fibers slow glucose diffusion into the bloodstream, minimizing postprandial glycemic excursions.' },
+      { name: 'Boiled Unripe Plantain with Garden Egg & Smoked Fish Stew', cat: 'Breakfast', cal: 280, prep: 10, cost: 800, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Unripe plantain is packed with resistant starch that behaves like soluble fiber, significantly flattening blood sugar curves.' },
+      { name: 'Pure Steamed Moi Moi with Titus Fish (No Bouillon Sugar)', cat: 'Breakfast', cal: 290, prep: 15, cost: 750, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Low glycemic pulse loaded with complex legumes and lean fish that keeps HbA1c in optimal range.' },
+      { name: 'Boiled Egg with Steamed Ugwu Greens & Garlic Dressing', cat: 'Breakfast', cal: 210, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Zero refined sugars, providing lutein, choline, and bioactive allicin that improves insulin receptor sensitivity.' },
+      { name: 'Rolled Oats Porridge with Cinnamon Bark & Chia Seeds', cat: 'Breakfast', cal: 260, prep: 5, cost: 500, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Cinnamaldehyde in ceylon cinnamon mimics insulin action and assists cellular glucose uptake.' },
+      { name: 'Efo Riro (Spinach & Locust Bean Stew) with Broiled Fish', cat: 'Lunch', cal: 340, prep: 14, cost: 1200, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Fermented locust beans (iru) and spinach greens provide magnesium, a vital co-factor for insulin enzymes.' },
+      { name: 'Brown Honey Beans Pottage with Pure Crayfish & Scent Leaves', cat: 'Lunch', cal: 350, prep: 20, cost: 850, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'High amylose pulses offer slow digestive breakdown, preventing rapid glucose spikes.' },
+      { name: 'Fresh Catfish Pepper Soup with Unripe Plantain Batons', cat: 'Lunch', cal: 310, prep: 16, cost: 1350, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Low carb, broth-rich meal seasoned with calabash nutmeg and piperine for metabolic regulation.' },
+      { name: 'Ofada Local Brown Rice with Light Vegetable Stew & Titus', cat: 'Lunch', cal: 380, prep: 18, cost: 1250, img: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=900&auto=format&fit=crop&q=85', why: 'Unpolished Ofada rice maintains intact bran layer and germ, slowing enzymatic carbohydrate breakdown.' },
+      { name: 'Steamed Cabbage & Carrot Stir-Fry with Sliced Boiled Eggs', cat: 'Lunch', cal: 240, prep: 8, cost: 500, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Very low glycemic load meal providing essential antioxidants without sugar elevation.' },
+      { name: 'Grilled Herb Titus Steak with Steamed Ugwu Greens', cat: 'Dinner', cal: 320, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Omega-3 fatty acids lower systemic inflammation associated with insulin resistance.' },
+      { name: 'Okro & Seafood Soup with Light Cabbage Swallow', cat: 'Dinner', cal: 250, prep: 14, cost: 1050, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Virtually starch-free dinner that keeps blood glucose stable and flat throughout sleep.' },
+      { name: 'Tilapia Fish Pepper Soup with Fresh Uziza Leaves', cat: 'Dinner', cal: 260, prep: 15, cost: 1200, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Uziza leaves are traditionally documented for their mild anti-hyperglycemic properties.' },
+      { name: 'Boiled Sweet Potato (Small Portion) with Spicy Egg Sauce', cat: 'Dinner', cal: 290, prep: 10, cost: 650, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Controlled portion of low-GI sweet potato paired with protein slows carbohydrate digestion.' },
+      { name: 'Vegetable Smoked Panla Stew with Boiled Unripe Plantain', cat: 'Dinner', cal: 295, prep: 14, cost: 850, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Resistant starch dinner that improves insulin sensitivity by supporting butyrate-producing gut microbes.' },
+      { name: 'Raw Garden Eggs with Cameroon Pepper Peanut Dip', cat: 'Snacks', cal: 130, prep: 3, cost: 300, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Extremely low glycemic index snack that offers crunch and polyphenols without glucose spikes.' },
+      { name: 'Roasted Bambara Groundnuts (Okpa Beans Crunch)', cat: 'Snacks', cal: 160, prep: 4, cost: 350, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Bambara groundnuts are high in soluble fiber and resistant starch, stabilizing blood sugar.' },
+      { name: 'Chilled Hibiscus Zobo (Zero Sugar, Spiced with Ginger)', cat: 'Juices & Smoothies', cal: 30, prep: 5, cost: 200, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Zero added sugar infusion; gingerols enhance insulin action and curb inflammation.' },
+      { name: 'Cucumber, Bitter Leaf & Ginger Green Detox Juice', cat: 'Juices & Smoothies', cal: 25, prep: 4, cost: 250, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Vernonia amygdalina (bitter leaf) extracts possess documented glucose-regulating peptides.' },
+      { name: 'Fresh Green Apple Wedges with Roasted Groundnuts', cat: 'Fruits & Light Bites', cal: 140, prep: 2, cost: 400, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Pectin fiber in green apples and healthy fats in groundnuts slow fructose absorption.' },
+      { name: 'Crisp Pawpaw Cubes with Lime Juice & Chia Sprinkles', cat: 'Fruits & Light Bites', cal: 110, prep: 3, cost: 350, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Low sugar tropical treat that supports digestion without glycemic surges.' },
+      { name: 'Coconut Tapioca Chia Pudding (Unsweetened with Cinnamon)', cat: 'Desserts', cal: 150, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&auto=format&fit=crop&q=85', why: 'Comforting guilt-free dessert that keeps blood sugar flat and steady.' }
+    ]
+  },
+  {
+    prefix: 'rec-hl-lp',
+    tag: 'Liver Health & Detox Care',
+    goal: 'Liver Health & Detox Care',
+    isWeightFriendly: true,
+    isStudentFriendly: true,
+    descSuffix: 'Hepatoprotective meals rich in glutathione precursors, milk thistle/antioxidants, turmeric, and light clean cooking.',
+    meals: [
+      { name: 'Bitter Leaf Soup (Ofe Onugbu) with Lean Catfish & Oat Swallow', cat: 'Lunch', cal: 340, prep: 16, cost: 1250, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Bitter leaf (Vernonia amygdalina) stimulates bile flow and protects hepatic cells from oxidative injury.' },
+      { name: 'Turmeric Spiced Steamed Fish Stew with White Rice', cat: 'Lunch', cal: 360, prep: 14, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Curcumin in turmeric downregulates pro-inflammatory cytokines in liver parenchyma.' },
+      { name: 'Fresh Ugwu & Scent Leaf (Efirin) Broth with Poached Titus', cat: 'Lunch', cal: 310, prep: 12, cost: 1150, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'High chlorophyll and polyphenols assist cytochrome P450 enzymatic detoxification phases.' },
+      { name: 'Okro Soup Prepared with Crayfish & Flaked Fish (No Palm Oil)', cat: 'Lunch', cal: 270, prep: 10, cost: 950, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Light fat-free cooking reduces metabolic burden on hepatic lipid processing.' },
+      { name: 'Boiled White Yam with Garlic, Ginger & Scent Leaf Stew', cat: 'Lunch', cal: 350, prep: 15, cost: 850, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Garlic activates liver enzymes that assist the body in clearing heavy metals and toxins.' },
+      { name: 'Steamed Moi Moi with Sliced Boiled Eggs & Flaked Fish', cat: 'Breakfast', cal: 290, prep: 12, cost: 700, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Clean steamed legume protein supplies methionine and cysteine, precursors to master antioxidant glutathione.' },
+      { name: 'Golden Pap (Ogi) with Milk & Soft Boiled Egg', cat: 'Breakfast', cal: 250, prep: 5, cost: 450, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Fermented maize/millet pap is gentle on the stomach and minimizes hepatic workload.' },
+      { name: 'Rolled Oats Porridge Infused with Turmeric & Fresh Ginger', cat: 'Breakfast', cal: 270, prep: 6, cost: 500, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Anti-inflammatory spices support hepatic cellular membrane integrity.' },
+      { name: 'Boiled Sweet Potatoes with Crushed Garlic Egg Scramble', cat: 'Breakfast', cal: 320, prep: 10, cost: 600, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Allicin in fresh garlic stimulates sulfur-containing detoxification pathways.' },
+      { name: 'Steamed Cabbage, Broccoli & Carrot Medley with Boiled Egg', cat: 'Breakfast', cal: 230, prep: 8, cost: 550, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Cruciferous vegetables provide diindolylmethane (DIM) which optimizes liver detoxification pathways.' },
+      { name: 'Fresh Catfish Pepper Soup with Crushed Ehuru & Scent Leaf', cat: 'Dinner', cal: 290, prep: 14, cost: 1300, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Calabash nutmeg and clean fish broth deliver bioavailable proteins without heavy saturated fats.' },
+      { name: 'Grilled Herb Titus Fillet with Steamed Greens & Lemon Juice', cat: 'Dinner', cal: 330, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Omega-3 fatty acids attenuate non-alcoholic fatty liver disease (NAFLD) progression.' },
+      { name: 'Steamed Spinach & Shoko Stew with Boiled Chicken Breast', cat: 'Dinner', cal: 280, prep: 12, cost: 950, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Lean poultry and dark leafy greens prevent excess fat storage in hepatic tissue.' },
+      { name: 'Clear Vegetable Soup with Smoked Dry Fish & Oat Swallow', cat: 'Dinner', cal: 310, prep: 15, cost: 900, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'High-fiber soluble meal that binds intestinal toxins before they recirculate to the portal vein.' },
+      { name: 'Boiled Unripe Plantain with Light Tomato Fish Sauce', cat: 'Dinner', cal: 290, prep: 12, cost: 800, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Easily digestible starch that preserves liver glycogen stores without causing insulin surges.' },
+      { name: 'Fresh Garden Eggs with Crushed Walnut & Peanut Butter', cat: 'Snacks', cal: 140, prep: 3, cost: 350, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Arginine in nuts helps the liver detoxify ammonia, while garden egg flavonoids protect liver cells.' },
+      { name: 'Boiled Corn with Lightly Salted Groundnuts', cat: 'Snacks', cal: 210, prep: 10, cost: 350, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Whole grain snack avoiding hydrogenated trans fats and processed food chemicals.' },
+      { name: 'Artisan Zobo Hibiscus Brew with Ginger & Lemon (Sugar-Free)', cat: 'Juices & Smoothies', cal: 30, prep: 6, cost: 250, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Hibiscus polyphenols protect against hepatic steatosis and support healthy transaminase levels.' },
+      { name: 'Fresh Beetroot, Carrot & Ginger Cold Juice', cat: 'Juices & Smoothies', cal: 65, prep: 5, cost: 400, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Betaine in beetroot supports methylation and defends liver cells from toxic metabolite buildup.' },
+      { name: 'Warm Lemon, Ginger & Honey Morning Elixir', cat: 'Juices & Smoothies', cal: 25, prep: 3, cost: 200, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Stimulates morning bile secretion and promotes systemic hydration.' },
+      { name: 'Fresh Papaya (Pawpaw) Wedges with Lime Spritz', cat: 'Fruits & Light Bites', cal: 95, prep: 3, cost: 300, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Papain enzymes assist digestive protein hydrolysis, lightening the metabolic burden on the liver.' },
+      { name: 'Chilled Coconut Tapioca Pearls with Fresh Papaya Coulis', cat: 'Desserts', cal: 155, prep: 7, cost: 450, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&auto=format&fit=crop&q=85', why: 'Natural light dessert crafted without industrial chemicals or high-fructose corn syrups.' }
+    ]
+  },
+  {
+    prefix: 'rec-hl-ht',
+    tag: 'Heart Health & Blood Pressure (DASH/Hypertension)',
+    goal: 'Heart Health & Blood Pressure Care',
+    isWeightFriendly: true,
+    isStudentFriendly: true,
+    descSuffix: 'Low-sodium, high-potassium, rich in magnesium and omega-3 fatty acids for arterial relaxation and cardiovascular health.',
+    meals: [
+      { name: 'Steamed Mackerel (Titus) Fillet with Ugwu Greens & Brown Rice', cat: 'Lunch', cal: 390, prep: 14, cost: 1200, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Potassium and omega-3 EPA/DHA relax arterial walls and lower systolic blood pressure.' },
+      { name: 'Okro & Spinach Seafood Stew with Oat Swallow (Low Salt)', cat: 'Lunch', cal: 310, prep: 12, cost: 1050, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Cooked with aromatic herbs instead of excess salt cubes, preserving endothelial flexibility.' },
+      { name: 'Beans Porridge Cooked with Scent Leaves & Boiled Plantain', cat: 'Lunch', cal: 420, prep: 20, cost: 850, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Tremendous potassium levels in beans and plantains counteract sodium-induced hypertension.' },
+      { name: 'Efo Riro with Locust Beans (Iru) & Grilled Chicken Breast', cat: 'Lunch', cal: 360, prep: 16, cost: 1250, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Magnesium in greens promotes cardiac muscle relaxation and regular rhythm.' },
+      { name: 'Boiled Sweet Potato Batons with Mackerel Fish Stew', cat: 'Lunch', cal: 370, prep: 15, cost: 950, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'High-potassium complex carbs that prevent fluid retention and support cardiovascular health.' },
+      { name: 'Rolled Oats Porridge with Flaxseed & Sliced Sweet Banana', cat: 'Breakfast', cal: 290, prep: 5, cost: 500, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Soluble oat fibers bind LDL cholesterol in digestive tract, aiding cardiovascular clearance.' },
+      { name: 'Steamed Moi Moi with Scent Leaves & Flaked Fish', cat: 'Breakfast', cal: 280, prep: 12, cost: 700, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Heart-healthy plant protein without saturated animal lard or hydrogenated fats.' },
+      { name: 'Boiled Egg Whites with Garlic Sautéed Spinach', cat: 'Breakfast', cal: 200, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Allicin compounds enhance nitric oxide bioavailability, leading to vasodilation.' },
+      { name: 'Millet Pap (Ogi Baba) with Skimmed Milk & Boiled Egg', cat: 'Breakfast', cal: 240, prep: 5, cost: 400, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Naturally sodium-free fermented whole grain breakfast gentle on circulation.' },
+      { name: 'Boiled Semi-Ripe Plantain with Peppered Scrambled Eggs', cat: 'Breakfast', cal: 330, prep: 10, cost: 650, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Rich in dietary potassium and choline for healthy homocysteine balance.' },
+      { name: 'Catfish Pepper Soup with Fresh Basil & Scent Leaves', cat: 'Dinner', cal: 290, prep: 15, cost: 1300, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Warm herbal broth enriched with eugenol from scent leaves that assists vascular tone.' },
+      { name: 'Grilled Tilapia with Tossed Garden Greens & Olive Drizzle', cat: 'Dinner', cal: 280, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Very low sodium dinner loaded with heart-protective antioxidants.' },
+      { name: 'Steamed Cabbage & Carrot Stir-Fry with Poached Salmon/Titus', cat: 'Dinner', cal: 320, prep: 10, cost: 1150, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Flavonoids and marine lipids synergize to reduce endothelial inflammation.' },
+      { name: 'Vegetable Okro Stew with Smoked Panla & Cauliflower Mash', cat: 'Dinner', cal: 260, prep: 12, cost: 950, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Light evening meal that aids blood pressure regulation through the night.' },
+      { name: 'Clear Fish Pepper Soup with Boiled Yam Baton', cat: 'Dinner', cal: 300, prep: 14, cost: 1100, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Hydrating, comforting dinner seasoned naturally without high-sodium monosodium glutamate.' },
+      { name: 'Crisp Garden Eggs with Spicy Ose Oji Peanut Dip', cat: 'Snacks', cal: 125, prep: 3, cost: 300, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'High-potassium Indigenous eggplant promotes normal blood pressure.' },
+      { name: 'Steamed Sweet Corn Cob with Roasted Groundnuts', cat: 'Snacks', cal: 210, prep: 8, cost: 350, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Resveratrol in peanut skins contributes to healthy arterial lining.' },
+      { name: 'Pure Hibiscus Zobo Elixir with Pineapple & Ginger (Unsweetened)', cat: 'Juices & Smoothies', cal: 35, prep: 6, cost: 250, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Clinical studies confirm hibiscus tea exhibits natural ACE-inhibitory and diuretic effects.' },
+      { name: 'Cucumber, Lime & Garden Mint Infusion Water', cat: 'Juices & Smoothies', cal: 15, prep: 2, cost: 200, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Maintains optimal blood volume and hydration without sodium spikes.' },
+      { name: 'Crimson Watermelon Cubes & Sweet Pawpaw Bowl', cat: 'Fruits & Light Bites', cal: 110, prep: 3, cost: 350, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'L-citrulline in watermelon converts to nitric oxide in the body, promoting blood flow.' },
+      { name: 'Fresh Seasonal Orange Slices with Dark Raisins', cat: 'Fruits & Light Bites', cal: 130, prep: 2, cost: 300, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Hesperidin flavonoid in citrus supports capillary elasticity and strength.' },
+      { name: 'Chilled Coconut Tapioca Pearls with Fresh Mango Coulis', cat: 'Desserts', cal: 160, prep: 7, cost: 450, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&auto=format&fit=crop&q=85', why: 'Naturally sodium-free dessert with clean coconut lipids.' }
+    ]
+  },
+  {
+    prefix: 'rec-hl-gt',
+    tag: 'Ulcer & Sensitive Stomach Care',
+    goal: 'Ulcer, Gastritis & Gut Healing',
+    isWeightFriendly: true,
+    isStudentFriendly: true,
+    descSuffix: 'Non-irritating, mild, fiber-protective Nigerian meals that coat the stomach lining, promote healing, and avoid severe acid triggers.',
+    meals: [
+      { name: 'Steamed Sweet Potato Mash with Boiled Egg', cat: 'Breakfast', cal: 290, prep: 10, cost: 600, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Gentle, alkaline sweet potato mash soothes gastric mucosal lining without triggering acid.' },
+      { name: 'Creamy Golden Vanilla Custard with Whole Milk', cat: 'Breakfast', cal: 280, prep: 4, cost: 450, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Bland, smooth, and easily digestible texture that avoids irritating stomach ulcers.' },
+      { name: 'Soft Rolled Oats Cooked with Evaporated Milk & Banana', cat: 'Breakfast', cal: 320, prep: 5, cost: 500, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Soluble mucilage coats gastric walls and protects against hyperacidity.' },
+      { name: 'Silky Millet Pap (Ogi) with Milk & Scrambled Eggs (No Pepper)', cat: 'Breakfast', cal: 270, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Fermented pap is probiotic and restorative for delicate digestive tracts.' },
+      { name: 'Steamed Soft Moi Moi Elewe (Mild, No Hot Pepper)', cat: 'Breakfast', cal: 280, prep: 12, cost: 700, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Steamed bean pudding cooked with only mild tatashe bell pepper for safe digestion.' },
+      { name: 'Fresh Okro Soup with Boiled White Fish & Soft Oat Swallow', cat: 'Lunch', cal: 320, prep: 12, cost: 1000, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Okra mucilage forms a protective barrier over ulcerated stomach tissue.' },
+      { name: 'Soft Boiled White Yam with Non-Spicy Tomato Egg Sauce', cat: 'Lunch', cal: 350, prep: 14, cost: 850, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&auto=format&fit=crop&q=85', why: 'Easily digestible starch paired with mild scrambled eggs that will not inflame stomach walls.' },
+      { name: 'Mild Spinach (Efo) Stew with Steamed Titus & Rice', cat: 'Lunch', cal: 380, prep: 15, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Glutamine in spinach assists mucosal repair while avoiding stinging hot spices.' },
+      { name: 'Soft Simmered Beans Porridge (Mild, No Scotch Bonnet)', cat: 'Lunch', cal: 370, prep: 22, cost: 800, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Well-cooked soft honey beans provide gentle dietary fiber for healthy digestive transit.' },
+      { name: 'Clear Chicken Broth Soup with Boiled Sweet Potato Chunks', cat: 'Lunch', cal: 320, prep: 15, cost: 950, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Bone broth amino acids (glycine and proline) support intestinal barrier integrity.' },
+      { name: 'Steamed Croaker Fish with Mashed Potatoes & Carrot Puree', cat: 'Dinner', cal: 310, prep: 12, cost: 1100, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Light, non-greasy evening meal that allows the stomach to heal during sleep.' },
+      { name: 'Creamy Asaro Yam Pottage (Mild, Cooked with Palm Oil & Fish)', cat: 'Dinner', cal: 360, prep: 16, cost: 900, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=900&auto=format&fit=crop&q=85', why: 'Gentle, comforting texture that does not demand heavy stomach acid production.' },
+      { name: 'Boiled Ripe Plantain with Mild Scrambled Eggs', cat: 'Dinner', cal: 340, prep: 10, cost: 700, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&auto=format&fit=crop&q=85', why: 'Ripe plantains contain leucocyanidin, a flavonoid known to increase mucous thickness in the stomach.' },
+      { name: 'Mild Okro Stew with Boiled Chicken Breast & Soft Swallow', cat: 'Dinner', cal: 300, prep: 14, cost: 1050, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=85', why: 'Mucilaginous fiber coats and soothes stomach lining for uninterrupted rest.' },
+      { name: 'Steamed White Rice with Non-Acidic Pumpkin Vegetable Stew', cat: 'Dinner', cal: 350, prep: 14, cost: 850, img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=900&auto=format&fit=crop&q=85', why: 'Bland, nutritious combination that maintains energy without triggering reflux.' },
+      { name: 'Ripe Banana Slices with Mild Roasted Groundnuts', cat: 'Snacks', cal: 170, prep: 2, cost: 300, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Bananas act as a natural antacid, providing quick relief from epigastric discomfort.' },
+      { name: 'Steamed Sweet Corn Cob (Tender Kernels)', cat: 'Snacks', cal: 180, prep: 8, cost: 350, img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&auto=format&fit=crop&q=85', why: 'Naturally sweet and non-acidic snack that sustains energy between classes.' },
+      { name: 'Chilled Fresh Kunu Aya (Tiger Nut & Coconut Milk)', cat: 'Juices & Smoothies', cal: 160, prep: 6, cost: 450, img: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&auto=format&fit=crop&q=85', why: 'Soothing alkaline plant milk that neutralizes stomach hyperacidity.' },
+      { name: 'Chilled Coconut Water with Cucumber Ribbons', cat: 'Juices & Smoothies', cal: 45, prep: 2, cost: 300, img: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=900&auto=format&fit=crop&q=85', why: 'Replenishes electrolytes with a soothing, non-acidic pH.' },
+      { name: 'Fresh Pawpaw (Papaya) Bowl with Sweet Honey', cat: 'Fruits & Light Bites', cal: 110, prep: 3, cost: 350, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Papain proteolytic enzymes gently assist digestion, relieving digestive fullness.' },
+      { name: 'Crisp Sweet Watermelon Cubes', cat: 'Fruits & Light Bites', cal: 85, prep: 2, cost: 300, img: 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=900&auto=format&fit=crop&q=85', why: 'Over 90% water content; non-acidic fruit that cools and rehydrates the stomach.' },
+      { name: 'Chilled Coconut Tapioca Pudding with Mashed Banana', cat: 'Desserts', cal: 170, prep: 7, cost: 450, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&auto=format&fit=crop&q=85', why: 'Creamy, gentle dessert that provides satisfaction without processed spices or irritants.' }
+    ]
+  }
+];
+
+let generatedCode = '';
+categories.forEach(cat => {
+  cat.meals.forEach((m, idx) => {
+    const id = `${cat.prefix}-${idx + 1}`;
+    generatedCode += `  // ${cat.tag} Meal ${idx + 1}
+  {
+    id: '${id}',
+    name: '${m.name.replace(/'/g, "\\'")}',
+    category: '${m.cat}',
+    servings: 2,
+    preparationTime: ${m.prep},
+    cookingTime: ${Math.max(5, m.prep + 4)},
+    estimatedCostPerServing: ${m.cost},
+    costCurrency: 'NGN',
+    calories: ${m.cal},
+    protein: '${Math.round(m.cal * 0.05)}g',
+    carbs: '${Math.round(m.cal * 0.12)}g',
+    fat: '${Math.round(m.cal * 0.025)}g',
+    fiber: '${Math.round(m.cal * 0.015)}g',
+    studentFriendly: ${cat.isStudentFriendly},
+    studentCategories: ['Quick Meals Between Lectures', 'Student Budget Meals', 'Hostel Kitchen'],
+    weightFriendly: ${cat.isWeightFriendly},
+    weightGoal: '${cat.goal}',
+    equipmentRequired: ['Single hot plate', 'Electric kettle'],
+    storageRequirements: 'Store in covered bowl; reheats easily on hostel hot plate.',
+    image: '${m.img}',
+    description: '${m.name.replace(/'/g, "\\'")}. ${cat.descSuffix}',
+    whyThisMeal: '${m.why.replace(/'/g, "\\'")}',
+    dietaryTags: ['Nigerian Classic', '${cat.tag}'],
+    allergens: [],
+    nutritionalInfo: {
+      calories: ${m.cal},
+      protein: '${Math.round(m.cal * 0.05)}g',
+      carbs: '${Math.round(m.cal * 0.12)}g',
+      fat: '${Math.round(m.cal * 0.025)}g',
+      fiber: '${Math.round(m.cal * 0.015)}g',
+      keyNutrients: 'Essential vitamins, bioactive plant nutrients, and balanced macronutrients'
+    },
+    ingredients: [
+      { name: 'Core Nigerian Ingredients', amount: 1, unit: 'portion' },
+      { name: 'Fresh Aromatics & Herbs', amount: 1, unit: 'bunch' },
+      { name: 'Seasoning & Sea Salt', amount: 1, unit: 'to taste' }
+    ],
+    instructions: [
+      'Prepare fresh local ingredients and simmer on medium heat.',
+      'Allow flavors to develop gracefully, check seasoning, and serve hot.'
+    ]
+  },
+`;
+  });
+});
+
+fs.writeFileSync('generated_recipes.js.txt', generatedCode);
+console.log('Generated recipes successfully! File size:', generatedCode.length);

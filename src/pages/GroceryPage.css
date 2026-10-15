@@ -1,0 +1,271 @@
+.grocery-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+.grocery-header-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.grocery-title {
+  font-size: 2.2rem;
+  color: var(--color-chocolate);
+  margin: 0 0 6px;
+}
+
+.grocery-subtitle {
+  color: var(--color-secondary-text);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.grocery-stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-pill-terracotta {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-secondary-text);
+}
+
+.stat-pill-terracotta strong {
+  color: var(--color-chocolate);
+}
+
+.stat-pill-terracotta.success {
+  background: var(--color-terracotta-light);
+  border-color: var(--color-terracotta);
+}
+
+.stat-pill-terracotta.success strong {
+  color: var(--color-terracotta-dark);
+}
+
+.add-grocery-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  background: var(--color-white);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-subtle);
+}
+
+.add-name-input {
+  flex: 2;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  outline: none;
+  background: transparent;
+  color: var(--color-main-text);
+}
+
+.add-qty-input {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.88rem;
+  outline: none;
+  background: var(--color-cream);
+  color: var(--color-chocolate);
+}
+
+.btn-add-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-item:hover {
+  background: var(--color-terracotta-dark);
+}
+
+.list-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.items-count-label {
+  font-size: 0.85rem;
+  color: var(--color-secondary-text);
+  font-weight: 600;
+}
+
+.list-btn-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-clear-completed,
+.btn-clear-all {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-secondary-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-completed:hover {
+  background: var(--color-cream);
+  color: var(--color-chocolate);
+}
+
+.btn-clear-all:hover {
+  background: var(--color-warm-red-bg);
+  border-color: var(--color-warm-red);
+  color: var(--color-warm-red);
+}
+
+.empty-grocery-card {
+  background: var(--color-white);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 50px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-grocery-card h3 {
+  margin: 12px 0 6px;
+  color: var(--color-chocolate);
+}
+
+.empty-grocery-card p {
+  color: var(--color-secondary-text);
+  max-width: 440px;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.grocery-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grocery-item-row {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.grocery-item-row:hover {
+  border-color: var(--color-terracotta);
+  box-shadow: var(--shadow-subtle);
+}
+
+.grocery-item-row.completed {
+  background: var(--color-cream);
+  opacity: 0.65;
+}
+
+.grocery-item-row.completed .item-name {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+.check-circle-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.check-circle-btn.checked {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.item-text-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-chocolate);
+}
+
+.item-source {
+  font-size: 0.74rem;
+  color: var(--color-terracotta);
+}
+
+.item-amount-badge {
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-chocolate);
+}
+
+.btn-delete-item {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-delete-item:hover {
+  color: var(--color-warm-red);
+}

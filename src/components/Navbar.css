@@ -1,0 +1,247 @@
+.navbar-header {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  box-shadow: var(--shadow-subtle);
+}
+
+.navbar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-emblem {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--color-terracotta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(198, 107, 78, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover .brand-emblem {
+  transform: scale(1.04);
+}
+
+.brand-logo-img {
+  width: 28px;
+  height: 28px;
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-chocolate);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.7rem;
+  color: var(--color-terracotta);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-secondary-text);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  background: var(--color-cream);
+  color: var(--color-chocolate);
+}
+
+.nav-link.active {
+  background: var(--color-chocolate);
+  color: var(--color-white);
+}
+
+.nav-link.student-nav-pill {
+  border: 1px dashed var(--color-terracotta);
+  color: var(--color-terracotta);
+  background: var(--color-terracotta-light);
+}
+
+.nav-link.student-nav-pill:hover {
+  background: var(--color-beige);
+}
+
+.nav-link.student-nav-pill.active {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border-style: solid;
+}
+
+.nav-highlight-badge {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.navbar-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Visible PWA Install Button */
+.btn-visible-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(198, 107, 78, 0.2);
+}
+
+.btn-visible-install:hover {
+  background: var(--color-terracotta-dark);
+  transform: translateY(-1px);
+}
+
+.btn-offline-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-cream);
+  color: var(--color-chocolate);
+  border: 1px solid var(--color-border);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-offline-indicator:hover {
+  background: var(--color-beige);
+}
+
+.offline-count-bubble {
+  background: var(--color-chocolate);
+  color: var(--color-white);
+  font-size: 0.7rem;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-hamburger-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--color-chocolate);
+  cursor: pointer;
+  padding: 6px;
+}
+
+.mobile-nav-drawer {
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  padding: 16px 20px 24px;
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-chocolate);
+}
+
+.mobile-nav-item.active {
+  background: var(--color-chocolate);
+  color: var(--color-white);
+}
+
+.mobile-install-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 960px) {
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-hamburger-btn {
+    display: block;
+  }
+}

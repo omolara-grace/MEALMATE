@@ -1,0 +1,430 @@
+.recipe-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 33, 26, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.recipe-modal-card-terracotta {
+  background: var(--color-cream);
+  border-radius: var(--radius-lg);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-modal);
+  border: 1px solid var(--color-border);
+}
+
+.recipe-modal-close-round {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--color-border);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-chocolate);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recipe-modal-close-round:hover {
+  background: var(--color-white);
+  transform: rotate(90deg);
+}
+
+.recipe-modal-scrollable {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.recipe-detail-hero {
+  position: relative;
+  height: 320px;
+  background: var(--color-chocolate);
+}
+
+.recipe-detail-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-detail-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(47, 33, 26, 0.95) 0%, rgba(47, 33, 26, 0.3) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+
+.recipe-detail-hero-title {
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 6px 0 0;
+  line-height: 1.25;
+}
+
+.recipe-modal-content-body {
+  padding: 28px;
+}
+
+.modal-top-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.metrics-summary-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.metric-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-secondary-text);
+  font-weight: 600;
+}
+
+.metric-tag strong {
+  font-size: 0.95rem;
+  color: var(--color-chocolate);
+}
+
+.modal-cta-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-modal-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-chocolate);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal-action:hover {
+  background: var(--color-cream);
+  border-color: var(--color-chocolate);
+}
+
+.btn-modal-action.favorite-active,
+.btn-modal-action.saved-active {
+  background: var(--color-terracotta-light);
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta-dark);
+}
+
+.btn-modal-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal-primary-cta:hover {
+  background: var(--color-terracotta-dark);
+}
+
+.servings-calculator-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 14px 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.servings-note {
+  font-size: 0.84rem;
+  color: var(--color-secondary-text);
+}
+
+.why-meal-banner {
+  background: var(--color-white);
+  border-left: 4px solid var(--color-terracotta);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  border-top: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.why-meal-banner h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-chocolate);
+  font-family: var(--font-sans);
+}
+
+.why-meal-banner p {
+  margin: 6px 0 4px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-main-text);
+}
+
+.why-meal-banner small {
+  color: var(--color-muted);
+  font-style: italic;
+  font-size: 0.72rem;
+}
+
+.macro-breakdown-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.macro-breakdown-card h4 {
+  font-size: 0.92rem;
+  color: var(--color-chocolate);
+  margin: 0 0 12px;
+  font-family: var(--font-sans);
+}
+
+.macros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.macro-cell {
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.macro-cell.full-width {
+  grid-column: 1 / -1;
+}
+
+.macro-lbl {
+  font-size: 0.72rem;
+  color: var(--color-secondary-text);
+}
+
+.macro-cell strong {
+  font-size: 0.95rem;
+  color: var(--color-chocolate);
+}
+
+.equipment-advisory-card {
+  background: var(--color-beige);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 22px;
+}
+
+.advisory-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--color-chocolate);
+}
+
+.modal-block-section {
+  margin-bottom: 28px;
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.section-title-wrap h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--color-chocolate);
+}
+
+.btn-add-grocery-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-grocery-pill:hover {
+  background: var(--color-terracotta-dark);
+}
+
+.toast-grocery-added {
+  background: var(--color-terracotta-light);
+  color: var(--color-chocolate);
+  border: 1px solid var(--color-terracotta);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ingredients-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.ingredient-check-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ingredient-check-item:hover {
+  border-color: var(--color-terracotta);
+}
+
+.ingredient-check-item.item-checked {
+  background: var(--color-cream);
+  opacity: 0.6;
+}
+
+.ingredient-check-item.item-checked span {
+  text-decoration: line-through;
+}
+
+.ing-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-terracotta);
+  cursor: pointer;
+}
+
+.ing-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ing-info strong {
+  font-size: 0.85rem;
+  color: var(--color-chocolate);
+}
+
+.ing-info span {
+  font-size: 0.82rem;
+  color: var(--color-secondary-text);
+}
+
+.instructions-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.instruction-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.step-circle {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.step-instruction-text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-main-text);
+}
